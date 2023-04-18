@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${titulo}">In</title>
+</head>
+
+<body>
+<h1 th:text="${titulo}"></h1>
+<a th:href="@{/listar}">volver</a>
+
+<div>
+
+    <form method="post" th:action="@{/form}" th:object="${producto}" enctype="multipart/form-data">
+        <input th:field="*{id}" th:if="${producto.id != null }" type="hidden">
+        <div><label for="nombre">Nombre</label>
+            <div><input th:field="*{nombre}" type="text"></div>
+            <small th:errors="*{nombre}" th:if="${#fields.hasErrors('nombre')}"></small>
+        </div>
+        <div><label for="precio">Precio</label>
+            <div><input th:field="*{precio}" type="number"></div>
+            <small th:errors="*{precio}" th:if="${#fields.hasErrors('precio')}"></small>
+        </div>
+        <div><label for="createAt">Fecha</label>
+            <div><input th:field="*{createAt}" type="date"></div>
+        </div>
+        <div><label for="categoria.id">Categoria</label>
+            <div><select th:field="*{categoria.id}" type="date">
+                <option value="">--Seleccionar --</option>
+                <option th:each="categoria: ${categorias}" th:text="${categoria.nombre}"
+                        th:value="categoria.id"></option>
+
+                <small th:errors="*{categoria.id}" th:if="${#fields.hasErrors('categoria.id')}"></small>
+
+            </select>
+            </div>
+        </div>
+        <div><label for="file">Foto</label>
+            <div><input name="file" type="file"></div>
+        </div>
+
+        <div>
+            <div><input type="submit" value="Crear"></div>
+        </div>
+    </form>
+
+</div>
+
+</body>
+
+</html>
